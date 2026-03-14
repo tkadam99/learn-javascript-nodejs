@@ -12,7 +12,7 @@
 
     <div class="main min-h-screen w-full bg-zinc-900">
       <div class="form p-10 text-white">
-        <form action="">
+        <form action="/create" method="post">
           <input
             name="title"
             class="block w-full rounded outline-none bg-zinc-800 px-5 py-2"
@@ -24,27 +24,23 @@
             class="mt-2 block w-full resize-none rounded outline-none bg-zinc-800 px-5 py-2"
             placeholder="Task Description"
           ></textarea>
+
           <input class="mt-2 bg-blue-600 px-3 py-2 rounded-md" type="submit" value="Create Task" />
+
         </form>
       </div>
+
       <div class="tasks flex gap-3 flex-wrap p-10">
-        <div class="task w-72 px-3 py-4 hidden rounded-md bg-zinc-600 flex flex-col">
-            <h1 class="text-white tracking-tighter text-2xl">Some Task goes here</h1>
-            <a class="mt-3  self-end" href="">Read More....</a>
-        </div>
-        <div class="task w-72 px-3 py-4 hidden rounded-md bg-zinc-600 flex flex-col">
-            <h1 class="text-white tracking-tighter text-2xl">Some Task goes here</h1>
-            <a class="mt-3  self-end" href="">Read More....</a>
-        </div>
-        <div class="task w-72 px-3 py-4 hidden rounded-md bg-zinc-600 flex flex-col">
-            <h1 class="text-white tracking-tighter text-2xl">Some Task goes here</h1>
-            <a class="mt-3  self-end" href="">Read More....</a>
-        </div>
-        <div class="task w-72 px-3 hidden py-4 rounded-md bg-zinc-600 flex flex-col">
-            <h1 class="text-white tracking-tighter text-2xl">Some Task goes here</h1>
-            <a class="mt-3  self-end" href="">Read More....</a>
-        </div>
-        <h3 class="text-zinc-500"> No tasks yet</h3>
+        <% if(files.length>0) { %>
+            <% files.forEach((val)=>{ %>
+                <div class="task w-72 px-3 py-4 rounded-md bg-zinc-600 flex flex-col">
+                    <h1 class="text-white tracking-tighter text-2xl"><%= val %></h1>
+                    <a class="mt-3  self-end" href="">Read More....</a>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <h3 class="text-zinc-500"> No tasks yet</h3>
+        <% } %>
       </div>
     </div>
 
