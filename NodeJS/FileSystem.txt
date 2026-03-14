@@ -1,0 +1,34 @@
+// const fs = require('fs');
+// import {fs} from "fs";
+
+// fs.writeFile("hey.txt", "Hey! How are You?", (err) => {
+//     if(err) console.log(err);
+//     else console.log("DOne")
+// })
+
+// fs.appendFile("hey.txt", "\n I am Good! What about you?", (err) => {
+//     if(err) console.log(err);
+//     else console.log("DOne")
+// })
+
+// fs.rename("hey.txt", "hello.txt", (err) => {
+//     if(err) console.log(err);
+//     else console.log("DOne")
+// });
+
+// fs.copyFile("hello.txt", "./copy/copyHello.txt",(err) => {
+//     if(err) console.log(err);
+//     else console.log("DOne")
+// })
+
+// fs.unlink("hello.txt", (err) => {
+//     if(err) console.log(err);
+//     else console.log("DOne")
+// });
+
+// fs.rm("./copy", {recursive:true}, (err) => {
+//     if(err) console.log(err);
+//     else console.log("remmoved");
+// })
+
+
