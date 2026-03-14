@@ -1,0 +1,14 @@
+
+/* Set a new font for the entire site */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: pink;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
