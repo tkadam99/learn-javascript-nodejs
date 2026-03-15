@@ -36,13 +36,18 @@
                 <div class="task w-72 px-3 py-4 rounded-md bg-zinc-600 flex flex-col">
                     <h1 class="text-white tracking-tighter text-2xl"><%= val.name.replace(".txt", "") %></h1>
                     <p class="text-zinc-200 mt-2 text-sm"><%= val.desc %></p>
-                    <a class="mt-3  self-end text-blue-300" href="/files/<%= val.name %>">Read More</a>
+                    
+                    <div class="mt-auto pt-4 flex justify-between items-end">
+                        <a class="text-green-300 hover:text-green-200" href="/edit/<%= val.name %>">Edit</a>
+                        <a class="text-blue-300 hover:text-blue-200" href="/files/<%= val.name %>">Read More</a>
+                    </div>
                 </div>
             <% }) %>
         <% } else { %>
             <h3 class="text-zinc-500"> No tasks yet</h3>
         <% } %>
       </div>
+
     </div>
 
     <script src="/javascripts/script.js"></script>

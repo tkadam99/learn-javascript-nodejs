@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 
                 // let fileName = file.replace(".txt", "");
                 let fileName = file;
-                let details = data.toString().substring(0, 40) + "...";
+                let details = data.toString().substring(0, 20) + "...";
 
                 task.push({
                     name: fileName,
@@ -76,6 +76,64 @@ app.get('/files/:fileName', (req, res, next) => {
     res.render('showTask',{showTask: showTask});
    });
 });
+
+app.get('/edit/:fileName', (req, res, next) => {
+    
+   fs.readFile(`./files/${req.params.fileName}`,"utf-8", (err, data) => {
+    if(err) {
+        return res.status(500).send("Error reading file")
+    }
+    let editTask = [];
+    let fileName = req.params.fileName;
+    let details = data;
+
+    editTask.push({
+        name: fileName,
+        desc: details
+    });
+
+    res.render('editTask',{editTask: editTask});
+   });
+});
+
+app.post("/edit/:oldFileName", (req, res) => {
+
+    let oldFileName = req.params.oldFileName.replace(".txt", "");
+    console.log("", oldFileName);
+    let newFileName = req.body.newTitle.split(' ').join('');
+    console.log("", newFileName);
+
+   
+    // console.log(req.body);
+
+    if(oldFileName !== newFileName) {
+        fs.rename(`./files/${oldFileName}.txt`, `./files/${newFileName}.txt`, (err) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error Renaming file");
+            }
+            fs.writeFile(`./files/${newFileName}.txt`, req.body.newDescription, (err) => {
+                if(err) {
+                    console.log(err);
+                    return res.status(500).send("Error Writing the file");
+                }
+                res.redirect('/')
+            })
+            
+        });
+    }
+    else {
+        fs.writeFile(`./files/${oldFileName}.txt`, req.body.newDescription, (err)=>{
+        if(err) {
+            console.log(err);
+            return res.status(500).send("Error Writing the file");
+        }
+        res.redirect('/')
+    });
+    }
+});
+
+
 
 app.post("/create", (req, res) => {
     // console.log(req.body);
