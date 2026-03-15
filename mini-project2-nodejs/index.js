@@ -33,7 +33,8 @@ app.get("/", (req, res) => {
 
             fs.readFile(`./files/${file}`, (err, data) => {
 
-                let fileName = file.replace(".txt", "");
+                // let fileName = file.replace(".txt", "");
+                let fileName = file;
                 let details = data.toString().substring(0, 40) + "...";
 
                 task.push({
@@ -53,6 +54,27 @@ app.get("/", (req, res) => {
 
     });
 
+});
+
+app.get('/files/:fileName', (req, res, next) => {
+    
+   fs.readFile(`./files/${req.params.fileName}`,"utf-8", (err, data) => {
+    if(err) {
+        return res.status(500).send("Error reading file")
+    }
+    let showTask = [];
+    let fileName = req.params.fileName;
+    let details = data;
+
+    showTask.push({
+        name: fileName,
+        desc: details
+    });
+
+    // console.log("sgowTask", showTask);
+
+    res.render('showTask',{showTask: showTask});
+   });
 });
 
 app.post("/create", (req, res) => {
