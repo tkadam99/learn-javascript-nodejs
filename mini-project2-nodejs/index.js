@@ -13,17 +13,46 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.set("view engine", "ejs");
 
+
 app.get("/", (req, res) => {
-    fs.readdir(`./files`, (err, files) => {
-        console.log(files);
-        files.forEach((files) => {
-            fs.readFile(`./files/${files}`, (err, data) =>{
-                console.log(data.toString());
+
+    fs.readdir("./files", (err, files) => {
+
+        if (err) {
+            return res.status(500).send("Error reading directory");
+        }
+
+        let task = [];
+        let completed = 0;
+
+        if(files.length === 0){
+            return res.render("index", { task: task });
+        }
+
+        files.forEach((file) => {
+
+            fs.readFile(`./files/${file}`, (err, data) => {
+
+                let fileName = file.replace(".txt", "");
+                let details = data.toString().substring(0, 40) + "...";
+
+                task.push({
+                    name: fileName,
+                    desc: details
+                });
+
+                completed++;
+
+                if (completed === files.length) {
+                    res.render("index", { task: task });
+                }
+
             });
-        })
-        
-        res.render("index", {files: files});
-    })
+
+        });
+
+    });
+
 });
 
 app.post("/create", (req, res) => {

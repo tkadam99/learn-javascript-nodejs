@@ -31,11 +31,12 @@
       </div>
 
       <div class="tasks flex gap-3 flex-wrap p-10">
-        <% if(files.length>0) { %>
-            <% files.forEach((val)=>{ %>
+        <% if(task.length>0) { %>
+            <% task.forEach((val)=>{ %>
                 <div class="task w-72 px-3 py-4 rounded-md bg-zinc-600 flex flex-col">
-                    <h1 class="text-white tracking-tighter text-2xl"><%= val %></h1>
-                    <a class="mt-3  self-end" href="">Read More....</a>
+                    <h1 class="text-white tracking-tighter text-2xl"><%= val.name %></h1>
+                    <p class="text-zinc-200 mt-2 text-sm"><%= val.desc %></p>
+                    <a class="mt-3  self-end text-blue-300" href="">Read More</a>
                 </div>
             <% }) %>
         <% } else { %>
