@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900">
+
+    <% if (message) { %>
+        <div id="toast"
+            class="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded shadow-lg opacity-0 transition-opacity duration-500">
+            <%= message %>
+        </div>
+    <% } %>
+    <span id="toastMessage" data-message="<%= message %>" hidden></span>
+
+    <div class="w-full h-full bg-zinc-900 p-10 text-white">
+        <div class="nav mb-10 text-xl">
+            <a class="text-blue-500" href="/read">All Users</a>
+        </div>
+        <h1 class=" text-3xl mb-3 tracking-tighter">Create User</h1>
+        <form action="/create" method="post">
+          <input
+            name="name"
+            class="mt-2 block w-1/3 rounded outline-none bg-zinc-800 px-5 py-2"
+            type="text"
+            placeholder="Enter Name"
+          />
+          <input
+            name="username"
+            class="mt-2 block w-1/3 rounded outline-none bg-zinc-800 px-5 py-2"
+            type="text"
+            placeholder="Enter UserName"
+          />
+          <input
+            name="imgurl"
+            class="mt-2 block w-1/3 rounded outline-none bg-zinc-800 px-5 py-2"
+            type="text"
+            placeholder="Enter Image Url"
+          />
+          <input
+            name="email"
+            class="mt-2 block w-1/3 rounded outline-none bg-zinc-800 px-5 py-2"
+            type="text"
+            placeholder="Enter Email Id"
+          />
+
+          <input class="mt-2 bg-blue-600 px-3 py-2 rounded-md" type="submit" value="Create User" />
+
+        </form>
+    </div>
+
+    <script src="/javascripts/script.js"></script>
+</body>
+</html>
