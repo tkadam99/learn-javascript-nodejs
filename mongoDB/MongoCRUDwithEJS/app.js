@@ -17,12 +17,13 @@ app.get("/", (req, res) => {
 
 app.get("/read", async (req, res) => {
     let allUsers = await userModel.find();
-    res.render("read", {users: allUsers});
+    res.render("read", {users: allUsers, message: null});
 });
 
-app.get("/edit/:name", async (req, res) => {
+app.get("/edit/:id", async (req, res) => {
     // console.log("name is", req.params.name);
-    let editUser = await userModel.findOne({name: `${req.params.name}`});
+    let id = req.params.id;
+    let editUser = await userModel.findOne({_id: id});
     // console.log(editUser);
     res.render("editUser", {editUser: editUser});
 });
@@ -39,13 +40,13 @@ app.post("/create", async (req, res) => {
     res.render("index", {message: `${createdUser.name} created successfully`});
 });
 
-app.post("/edit/:oldname", async (req, res) => {
+app.post("/edit/:id", async (req, res) => {
     let {editname, editusername, editemail, editimgurl} = req.body;
-    let oldname = req.params.oldname;
+    let id = req.params.id;
     // let edituser = await userModel.findOne({name: oldname})
     // console.log("edited", edituser);
     // console.log("neweditedname", editname);
-    let editedUser = await userModel.findOneAndUpdate({name: oldname},{
+    let editedUser = await userModel.findOneAndUpdate({_id: id},{
         name: editname,
         username: editusername,
         email: editemail,
@@ -55,6 +56,18 @@ app.post("/edit/:oldname", async (req, res) => {
     let allUsers = await userModel.find();
 
     res.render("read", {users:allUsers, message: `${editedUser.name} was updated successfully`});
+});
+
+app.get("/delete/:id", async (req, res) => {
+    let id = req.params.id;
+    let userToBeDeleted = await userModel.findOne({_id: id});
+    let deleteUser = await userModel.findOneAndDelete({_id: id});
+    console.log(deleteUser);
+    // let deleteUser = await userModel.findOneAndDelete({userName: "sanjay"})
+    // res.send(deleteUser);
+    let allUsers = await userModel.find();
+
+    res.render("read", {users:allUsers, message: `${userToBeDeleted.name} was deleted successfully`});
 });
 
 app.listen(3000, () => {
