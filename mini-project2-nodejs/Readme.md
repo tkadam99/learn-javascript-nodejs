@@ -76,6 +76,31 @@ DailyTask.txt
 
 Each task appears as a card in the UI.
 
+Example card:
+
+```
+--------------------------
+DailyTask
+
+Finish Node.js assignment...
+
+Edit              Read More
+--------------------------
+```
+
+### Description Preview
+
+Instead of displaying the entire task description on the homepage, the application shows a **short preview** (first few characters) followed by `...`.
+
+Example:
+
+```
+Finish Node.js assignment and review Express...
+```
+
+This keeps the UI clean and prevents large content from overflowing the card layout.
+
+
 ---
 
 ### 3. Dynamic Rendering with EJS
@@ -89,6 +114,52 @@ res.render("index", { files: files });
 The template dynamically generates task cards for each file.
 
 ---
+
+## 4. Read Full Task
+
+Clicking **Read More** opens the full task description.
+
+Example route:
+
+```
+/files/DailyTask.txt
+```
+
+This displays the entire task content.
+
+---
+
+### 5. Edit Task
+
+Users can edit an existing task.
+
+Editing allows users to:
+
+* Modify the **task title**
+* Update the **task description**
+
+Behavior:
+
+* If the title changes → the file is renamed using `fs.rename()`
+* The description is updated using `fs.writeFile()`
+
+Workflow:
+
+```
+Task Card
+   ↓
+Click Edit
+   ↓
+Edit form opens
+   ↓
+Update title / description
+   ↓
+File renamed if necessary
+   ↓
+Content updated
+   ↓
+Redirect to home page
+```
 
 # Technologies Used
 
@@ -117,8 +188,6 @@ mini-project2-nodejs
 │   ├── abc.txt
 │   └── xyz.txt
 │
-├── node_modules
-│
 ├── public
 │   ├── images
 │   ├── javascripts
@@ -127,12 +196,13 @@ mini-project2-nodejs
 │       └── style.css
 │
 ├── views
-│   └── index.ejs
+│   ├── index.ejs
+│   └── editTask.ejs
+│   └── showTask.ejs
 │
 ├── index.js
 ├── package.json
 ├── package-lock.json
-├── .prettierrc
 └── README.md
 ```
 
@@ -182,6 +252,18 @@ views/index.ejs
 ```
 
 This template renders the main task interface.
+
+```
+views/showTask.ejs
+```
+
+This template renders the selected task after clicking READ MORE.
+
+```
+views/editTask.ejs
+```
+
+This template helps edit the task.
 
 ---
 
@@ -251,140 +333,87 @@ Open this URL in your browser.
 
 # Application Workflow
 
-### Step 1
-
-User opens:
-
-```
-http://localhost:3000
-```
-
-### Step 2
-
-The server reads all files inside the `files` directory.
-
-```
-fs.readdir("./files")
-```
-
-### Step 3
-
-The server sends file names to the EJS template.
-
-### Step 4
-
-The template dynamically displays tasks.
-
-### Step 5
-
-User can create new tasks via the form.
-
-### Step 6
-
-The backend saves tasks as text files.
-
----
-
-# Example Routes
-
-### GET /
-
-Displays all tasks.
+### 1. User visits the homepage
 
 ```
 GET /
 ```
 
+The server:
+
+* Reads all files inside the `files/` directory
+* Extracts task titles and description previews
+* Sends the data to the EJS template
+
 ---
 
-### POST /create
-
-Creates a new task.
+### 2. User creates a task
 
 ```
 POST /create
 ```
 
-Form data:
+The server:
 
-```
-title
-description
-```
-
----
-
-# Example UI
-
-The interface contains:
-
-* Task creation form
-* Task list displayed as cards
-* Tailwind styled UI
-
-Example layout:
-
-```
--------------------------------
- Welcome to Mini Project 2
--------------------------------
-
-[ Title Input ]
-
-[ Description Input ]
-
-[ Create Task ]
-
--------------------------------
-Task Cards
-
-abc.txt
-xyz.txt
-DailyTask.txt
--------------------------------
-```
+* Creates a `.txt` file
+* Saves the description
+* Redirects to the homepage
 
 ---
 
-# Possible Future Improvements
+### 3. User edits a task
 
-This project can be extended with additional features such as:
+```
+GET /edit/:fileName
+POST /edit/:oldFileName
+```
 
-### View Task Details
+The server:
 
-Allow users to read full task descriptions.
+* Loads existing task data
+* Displays the edit form
+* Renames the file if the title changed
+* Updates the description
 
-### Edit Tasks
+---
 
-Modify existing task files.
+### 4. User clicks Read More
 
-### Delete Tasks
+```
+GET /files/:fileName
+```
 
-Remove tasks from the system.
+The server:
 
-### Database Integration
+* Reads the selected file
+* Extracts all the data
+* Displays the data in new page
 
-Replace file storage with:
+---
 
-* MongoDB
-* MySQL
-* PostgreSQL
+# Future Improvements
 
-### Authentication
+Possible enhancements include:
 
-Add login and user accounts.
+* Delete tasks
+* Add confirmation dialogs
+* Convert file storage to a database (MongoDB / PostgreSQL)
+* Add authentication
+* Improve UI with animations and transitions
+* Implement search and filtering
 
 ---
 
 # Learning Objectives
 
-This project helps understand:
+This project demonstrates:
 
-* Express server setup
-* Handling HTTP requests
-* Working with file systems in Node.js
-* Dynamic rendering using EJS
-* Form handling in Express
+* Setting up an **Express server**
+* Handling **HTTP requests**
+* Working with the **Node.js file system**
+* Dynamic rendering using **EJS**
+* Processing **form data**
+* Building a simple **task management interface**
 * Serving static assets
 
 ---
