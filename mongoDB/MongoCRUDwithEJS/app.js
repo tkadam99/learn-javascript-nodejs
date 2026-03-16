@@ -20,6 +20,13 @@ app.get("/read", async (req, res) => {
     res.render("read", {users: allUsers});
 });
 
+app.get("/edit/:name", async (req, res) => {
+    // console.log("name is", req.params.name);
+    let editUser = await userModel.findOne({name: `${req.params.name}`});
+    // console.log(editUser);
+    res.render("editUser", {editUser: editUser});
+});
+
 app.post("/create", async (req, res) => {
     let {name, username, email, imgurl} = req.body;
     let createdUser = await userModel.create({
@@ -30,6 +37,24 @@ app.post("/create", async (req, res) => {
     })
     // res.send(createdUser);
     res.render("index", {message: `${createdUser.name} created successfully`});
+});
+
+app.post("/edit/:oldname", async (req, res) => {
+    let {editname, editusername, editemail, editimgurl} = req.body;
+    let oldname = req.params.oldname;
+    // let edituser = await userModel.findOne({name: oldname})
+    // console.log("edited", edituser);
+    // console.log("neweditedname", editname);
+    let editedUser = await userModel.findOneAndUpdate({name: oldname},{
+        name: editname,
+        username: editusername,
+        email: editemail,
+        imgurl: editimgurl,
+    }, {new: true})
+
+    let allUsers = await userModel.find();
+
+    res.render("read", {users:allUsers, message: `${editedUser.name} was updated successfully`});
 });
 
 app.listen(3000, () => {
