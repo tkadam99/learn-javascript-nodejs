@@ -36,8 +36,8 @@ app.post("/create", async (req, res) => {
         email: email,
         imgurl: imgurl,
     })
-    // res.send(createdUser);
-    res.render("index", {message: `${createdUser.name} created successfully`});
+    res.send(createdUser);
+    // res.render("index", {message: `${createdUser.name} created successfully`});
 });
 
 app.post("/edit/:id", async (req, res) => {
