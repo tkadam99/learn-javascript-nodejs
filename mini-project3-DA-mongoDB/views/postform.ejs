@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-zinc-900 text-white m-0 p-0">
+
+    <!-- Navbar -->
+    <nav class="w-full flex justify-between items-center px-10 py-5 bg-zinc-800 shadow">
+        <h1 class="text-2xl font-semibold tracking-tight">Create a Post</h1>
+
+        <a href="/logout"
+           class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 transition">
+            Logout
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="p-10">
+
+        <a href="/profile"
+           class="inline-block mb-6 bg-zinc-700 px-4 py-2 rounded hover:bg-zinc-600 transition">
+            ← Back to Profile
+        </a>
+
+        <h2 class="text-3xl mb-6 tracking-tight">Write a new post</h2>
+
+        <form action="/createpost" method="POST" class="space-y-4 w-1/2">
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Post Title"
+                required
+                class="w-full bg-zinc-800 px-4 py-2 rounded outline-none"
+            />
+
+            <textarea
+                name="content"
+                placeholder="Write your post here..."
+                rows="6"
+                required
+                class="w-full bg-zinc-800 px-4 py-2 rounded outline-none"
+            ></textarea>
+
+            <button
+                type="submit"
+                class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition">
+                Publish Post
+            </button>
+        </form>
+
+    </div>
+
+    <script src="/javascripts/script.js"></script>
+</body>
+</html>

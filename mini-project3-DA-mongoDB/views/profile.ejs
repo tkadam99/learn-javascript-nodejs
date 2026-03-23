@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-zinc-900 text-white m-0 p-0">
+
+    <!-- Toast -->
+    <% if (message) { %>
+        <div id="toast"
+            class="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded shadow-lg opacity-0 transition-opacity duration-500">
+            <%= message %>
+        </div>
+    <% } %>
+    <span id="toastMessage" data-message="<%= message %>" hidden></span>
+
+    <!-- Navbar -->
+    <nav class="w-full flex justify-between items-center px-10 py-5 bg-zinc-800 shadow">
+        <h1 class="text-2xl font-semibold tracking-tight">Your Profile</h1>
+
+        <a href="/logout"
+           class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 transition">
+            Logout
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="p-10">
+
+        <!-- Welcome -->
+        <h2 class="text-3xl mb-2 tracking-tight">Welcome, <%= user.name %> 👋</h2>
+        <p class="text-gray-400 mb-6">Email: <%= user.email %></p>
+
+        <!-- Create Post Button -->
+        <div class="mt-4 mb-8">
+            <a href="/createpost"
+               class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                + Create Post
+            </a>
+        </div>
+
+        <!-- User Posts Section -->
+        <h3 class="text-2xl mb-4">Your Posts</h3>
+
+        <div id="postsContainer" class="space-y-4">
+            <!-- We will fill this dynamically later using EJS -->
+            <!-- Example structure (we will replace with real data later):
+            <div class="bg-zinc-800 p-4 rounded">
+                <h4 class="text-xl font-semibold">Post Title</h4>
+                <p class="text-gray-300 mt-2">Post content goes here...</p>
+            </div>
+            -->
+        </div>
+
+    </div>
+
+    <script src="/javascripts/script.js"></script>
+</body>
+</html>
